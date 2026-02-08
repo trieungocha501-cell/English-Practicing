@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Master - THCS & THPT</title>
+    <style>
+        /* CSS: Phần trang trí giao diện */
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --bg-color: #f3f4f6;
+            --text-color: #1f2937;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* Thanh điều hướng */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: var(--secondary-color);
+            padding: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            margin: 0 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        nav button:hover, nav button.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+
+        /* Nội dung chính */
+        main {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            min-height: 400px;
+        }
+
+        .section {
+            display: none; /* Ẩn tất cả các phần, sẽ hiện bằng JS */
+            animation: fadeIn 0.5s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h2 { color: var(--primary-color); border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        h3 { color: var(--secondary-color); margin-top: 20px;}
+
+        /* Grid cho phần kiến thức */
+        .knowledge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+
+        .rule-box {
+            background-color: #e0f2fe;
+            padding: 10px;
+            border-left: 4px solid var(--primary-color);
+            margin: 10px 0;
+        }
+
+        /* Giao diện Flashcard đơn giản */
+        .flashcard-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .btn-action {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>ENGLISH MASTER</h1>
+        <p>Hệ thống ôn luyện Tiếng Anh THCS & THPT</p>
+    </header>
+
+    <nav>
+        <button onclick="showSection('home')" class="active">Trang Chủ (Lý Thuyết)</button>
+        <button onclick="showSection('flashcard')">Flashcard</button>
+        <button onclick="showSection('quiz')">Quiz (Trắc nghiệm)</button>
+        <button onclick="showSection('speaking')">Tập Nói</button>
+        <button onclick="showSection('test')">Bài Test</button>
+    </nav>
+
+    <main>
+        <div id="home" class="section active">
+            <h2>Kho Tàng Kiến Thức</h2>
+            
+            <div class="knowledge-grid">
+                <div class="card">
+                    <h3>📚 Từ vựng & Ngữ pháp (THCS - THPT)</h3>
+                    <ul>
+                        <li><strong>Lớp 6-9:</strong> Thì hiện tại đơn, Quá khứ đơn, So sánh hơn/nhất.</li>
+                        <li><strong>Lớp 10-12:</strong> Mệnh đề quan hệ, Câu điều kiện (loại 1, 2, 3, hỗn hợp), Đảo ngữ.</li>
+                        <li><strong>Collocations:</strong> Các cụm từ cố định thường gặp trong thi THPT QG.</li>
+                        <li><strong>Phrasal Verbs:</strong> 50 cụm động từ thông dụng (look for, take after...).</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>🗣️ Quy tắc Phát âm & Trọng âm</h3>
+                    
+                    <div class="rule-box">
+                        <strong>Quy tắc đuôi -ed:</strong><br>
+                        - /id/: t, d (wanted, needed)<br>
+                        - /t/: p, k, f, s, sh, ch (watched, stopped)<br>
+                        - /d/: còn lại (played, loved)
+                    </div>
+
+                    <div class="rule-box">
+                        <strong>Quy tắc Trọng âm cơ bản:</strong><br>
+                        1. Danh từ/Tính từ 2 âm tiết: Thường nhấn âm 1 (e.g., TABLE, HAPPY).<br>
+                        2. Động từ 2 âm tiết: Thường nhấn âm 2 (e.g., beGIN, reLAX).<br>
+                        3. Từ kết thúc bằng -tion, -sion, -ic: Nhấn âm ngay trước nó.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="flashcard" class="section">
+            <h2>Flashcard Ôn Từ Vựng</h2>
+            <p>Nhấn vào thẻ để xem nghĩa.</p>
+            
+            <div class="flashcard-container" onclick="flipCard(this)">
+                <span id="fc-content">Preserve (v)</span>
+            </div>
+            
+            <div style="text-align: center;">
+                <button class="btn-action" onclick="nextCard()">Từ tiếp theo</button>
+            </div>
+        </div>
+
+        <div id="quiz" class="section">
+            <h2>Quiz Trắc Nghiệm Nhanh</h2>
+            <div class="card">
+                <p><strong>Question 1:</strong> She ______ to school every day.</p>
+                <input type="radio" name="q1" id="q1a"> <label for="q1a">go</label><br>
+                <input type="radio" name="q1" id="q1b"> <label for="q1b">goes</label><br>
+                <input type="radio" name="q1" id="q1c"> <label for="q1c">going</label><br>
+                <br>
+                <button class="btn-action" onclick="alert('Đáp án đúng là: goes')">Kiểm tra</button>
+            </div>
+        </div>
+
+        <div id="speaking" class="section">
+            <h2>Luyện Tập Nói (Speaking)</h2>
+            <p>Chủ đề: <em>"Talk about your hobby"</em></p>
+            <div class="card" style="text-align: center;">
+                <p>Nhấn nút bên dưới và bắt đầu nói (Mô phỏng)</p>
+                <button class="btn-action" style="background-color: #dc2626;">🔴 Ghi âm</button>
+                <p><em>(Tính năng này cần tích hợp Web Speech API để hoạt động thực tế)</em></p>
+            </div>
+        </div>
+
+        <div id="test" class="section">
+            <h2>Bài Kiểm Tra Tổng Hợp</h2>
+            <p>Bài thi thử THPT Quốc Gia (Mock Test)</p>
+            <table border="1" width="100%" style="border-collapse: collapse; margin-top: 10px;">
+                <tr>
+                    <th style="padding: 10px; background: #eee;">Đề thi</th>
+                    <th style="padding: 10px; background: #eee;">Thời gian</th>
+                    <th style="padding: 10px; background: #eee;">Trạng thái</th>
+                </tr>
+                <tr>
+                    <td style="padding: 10px;">Đề số 01 - Cơ bản</td>
+                    <td style="padding: 10px;">45 phút</td>
+                    <td style="padding: 10px;"><a href="#">Làm bài</a></td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px;">Đề số 02 - Nâng cao</td>
+                    <td style="padding: 10px;">60 phút</td>
+                    <td style="padding: 10px;"><a href="#">Làm bài</a></td>
+                </tr>
+            </table>
+        </div>
+
+    </main>
+
+    <script>
+        // JavaScript: Xử lý chuyển tab và logic đơn giản
+        
+        // Hàm chuyển tab
+        function showSection(sectionId) {
+            // Ẩn tất cả section
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(sec => sec.classList.remove('active'));
+
+            // Bỏ active ở nút menu cũ
+            const navButtons = document.querySelectorAll('nav button');
+            navButtons.forEach(btn => btn.classList.remove('active'));
+
+            // Hiện section được chọn
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Active nút menu tương ứng (cách đơn giản: tìm theo text hoặc onclick, ở đây làm đơn giản)
+            event.target.classList.add('active'); 
+        }
+
+        // Logic Flashcard đơn giản
+        let isFront = true;
+        const vocabList = [
+            { word: "Preserve (v)", meaning: "Bảo tồn, gìn giữ" },
+            { word: "Diligent (adj)", meaning: "Siêng năng, cần cù" },
+            { word: "Contribution (n)", meaning: "Sự đóng góp" }
+        ];
+        let currentCardIndex = 0;
+
+        function flipCard(element) {
+            const content = document.getElementById('fc-content');
+            if (isFront) {
+                content.innerText = vocabList[currentCardIndex].meaning;
+                element.style.backgroundColor = "#16a34a"; // Đổi màu xanh lá khi lật
+            } else {
+                content.innerText = vocabList[currentCardIndex].word;
+                element.style.backgroundColor = "#2563eb"; // Màu xanh dương
+            }
+            isFront = !isFront;
+        }
+
+        function nextCard() {
+            currentCardIndex++;
+            if(currentCardIndex >= vocabList.length) currentCardIndex = 0;
+            
+            isFront = true;
+            document.getElementById('fc-content').innerText = vocabList[currentCardIndex].word;
+            document.querySelector('.flashcard-container').style.backgroundColor = "#2563eb";
+        }
+    </script>
+</body>
+</html>
