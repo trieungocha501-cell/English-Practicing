@@ -3,192 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="site-title">English Practicing</title>
+    <title>English Practicing</title>
     <style>
         :root {
-            --primary: #2563eb;
-            --secondary: #1e40af;
-            --bg: #f8fafc;
-            --text: #334155;
-            --correct: #16a34a;
-            --wrong: #dc2626;
-            --warning: #f59e0b;
+            --primary: #2563eb; --secondary: #1e40af; --bg: #f8fafc;
+            --text: #334155; --correct: #16a34a; --wrong: #dc2626; --warning: #f59e0b;
         }
-
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--bg); color: var(--text); line-height: 1.6; }
-        header { background: var(--primary); color: white; padding: 25px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); }
+        header { background: var(--primary); color: white; padding: 20px; text-align: center; }
         nav { display: flex; justify-content: center; background: var(--secondary); position: sticky; top: 0; z-index: 100; overflow-x: auto; }
-        nav button { background: none; border: none; color: white; padding: 15px 20px; cursor: pointer; font-weight: 600; transition: 0.3s; white-space: nowrap; }
+        nav button { background: none; border: none; color: white; padding: 15px 20px; cursor: pointer; font-weight: 600; transition: 0.3s; }
         nav button:hover, nav button.active { background: rgba(255,255,255,0.2); }
-
-        main { max-width: 1000px; margin: 20px auto; padding: 20px; }
+        main { max-width: 1100px; margin: 20px auto; padding: 20px; }
         .section { display: none; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .section.active { display: block; animation: slideUp 0.4s ease-out; }
+        .section.active { display: block; animation: fadeIn 0.3s; }
 
-        /* Kiến thức Trang chủ */
-        .knowledge-item { border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 15px; }
-        .knowledge-header { background: #f1f5f9; padding: 15px; cursor: pointer; font-weight: bold; display: flex; justify-content: space-between; border-radius: 10px; }
-        .knowledge-content { padding: 20px; display: none; border-top: 1px solid #e2e8f0; }
-        .knowledge-content.show { display: block; }
+        /* Tables & Search */
+        .table-wrapper { overflow-x: auto; margin-top: 10px; max-height: 400px; border: 1px solid #ddd; border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+        th, td { border: 1px solid #e2e8f0; padding: 12px; text-align: left; }
+        th { background: #eff6ff; position: sticky; top: 0; }
+        .search-box { width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid #e2e8f0; border-radius: 8px; box-sizing: border-box; }
 
-        /* Flashcard 3D */
-        .flashcard-wrapper { perspective: 1000px; width: 300px; height: 200px; margin: 30px auto; cursor: pointer; }
-        .flashcard-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 15px; }
-        .flashcard-inner.flipped { transform: rotateY(180deg); }
-        .flashcard-front, .flashcard-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: bold; border-radius: 15px; padding: 20px; box-sizing: border-box; }
-        .flashcard-front { background: linear-gradient(135deg, #60a5fa, #2563eb); color: white; }
-        .flashcard-back { background: #16a34a; color: white; transform: rotateY(180deg); }
-
-        /* Quiz & Test */
-        .question-block { padding: 20px; border-radius: 10px; border: 2px solid #f1f5f9; margin-bottom: 20px; transition: 0.3s; }
+        /* Question Blocks */
+        .question-block { padding: 15px; border-radius: 10px; border: 2px solid #f1f5f9; margin-bottom: 15px; }
         .unanswered { border-color: var(--warning); background-color: #fffbeb; }
-        .options-list label { display: block; padding: 10px; cursor: pointer; border-radius: 6px; }
+        .options-list label { display: block; padding: 8px; cursor: pointer; border-radius: 6px; }
         .options-list label:hover { background: #eff6ff; }
-        
-        .btn { background: var(--primary); color: white; border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; font-weight: bold; margin: 10px 5px; }
-        .result-box { display: none; margin-top: 20px; padding: 20px; border-radius: 10px; text-align: center; font-size: 1.2rem; font-weight: bold; }
 
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .btn { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; margin: 5px; }
+        .btn-reset { background: #64748b; }
+        .result-box { display: none; margin-top: 20px; padding: 20px; border-radius: 10px; text-align: center; font-weight: bold; }
+        
+        /* History Style */
+        .history-list { list-style: none; padding: 0; }
+        .history-item { padding: 10px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
 <header>
-    <h1 id="main-h1">ENGLISH PRACTICING</h1>
-    <p id="main-desc">Học tập thông minh - Thi cử tự tin</p>
+    <h1>ENGLISH PRACTICING</h1>
+    <p>Hệ thống tự học Ngôn ngữ Thông minh</p>
 </header>
 
-<nav id="navbar">
-    <button onclick="showTab('home')" class="nav-btn active" id="nav-home">Trang Chủ</button>
-    <button onclick="showTab('flashcard')" class="nav-btn" id="nav-fc">Flashcard</button>
-    <button onclick="showTab('quiz')" class="nav-btn" id="nav-quiz">Luyện Tập</button>
-    <button onclick="showTab('test')" class="nav-btn" id="nav-test">Bài Kiểm Tra</button>
+<nav>
+    <button onclick="showTab('home')" class="nav-btn active">Kiến Thức</button>
+    <button onclick="showTab('quiz')" class="nav-btn">Luyện Tập</button>
+    <button onclick="showTab('test')" class="nav-btn">Kiểm Tra</button>
+    <button onclick="showTab('history')" class="nav-btn">Lịch Sử</button>
 </nav>
 
 <main>
     <div id="home" class="section active">
-        <h2 id="home-title">📚 Kiến Thức Trọng Tâm</h2>
-        <div id="knowledge-container"></div>
-    </div>
-
-    <div id="flashcard" class="section">
-        <h2 id="fc-title">Thẻ Từ Vựng Thông Minh</h2>
-        <div class="flashcard-wrapper" onclick="this.querySelector('.flashcard-inner').classList.toggle('flipped')">
-            <div class="flashcard-inner">
-                <div class="flashcard-front" id="fc-front">Loading...</div>
-                <div class="flashcard-back" id="fc-back">Loading...</div>
-            </div>
-        </div>
-        <div style="text-align: center;">
-            <button class="btn" id="fc-next" onclick="nextCard()">Từ tiếp theo ➡</button>
+        <h2>📚 Tra cứu & Ngữ pháp</h2>
+        <input type="text" class="search-box" id="verbSearch" placeholder="Tìm động từ bất quy tắc (V1, V2, V3 hoặc nghĩa)..." onkeyup="searchVerbs()">
+        <div class="table-wrapper">
+            <table id="verbTable">
+                <thead>
+                    <tr><th>V1</th><th>V2</th><th>V3</th><th>Nghĩa</th><th>Ví dụ</th></tr>
+                </thead>
+                <tbody id="verbBody"></tbody>
+            </table>
         </div>
     </div>
 
     <div id="quiz" class="section">
-        <h2 id="quiz-title">📝 Trắc Nghiệm Nhanh</h2>
+        <h2>📝 Quiz Ngẫu Nhiên (5 câu)</h2>
         <div id="quiz-area"></div>
-        <button class="btn" id="btn-q-submit" onclick="grade('quiz')">Nộp Bài</button>
+        <button class="btn" onclick="grade('quiz')">Nộp Bài</button>
+        <button class="btn btn-reset" onclick="initQuiz()">Đề mới ↻</button>
         <div id="quiz-result" class="result-box"></div>
     </div>
 
     <div id="test" class="section">
-        <h2 id="test-title">⏱️ Bài Kiểm Tra Tổng Hợp</h2>
+        <h2>⏱️ Bài Kiểm Tra (10 câu)</h2>
         <div id="test-area"></div>
-        <button class="btn" id="btn-t-submit" onclick="grade('test')">Nộp Bài</button>
+        <button class="btn" onclick="grade('test')">Nộp Bài</button>
+        <button class="btn btn-reset" onclick="initTest()">Đề mới ↻</button>
         <div id="test-result" class="result-box"></div>
+    </div>
+
+    <div id="history" class="section">
+        <h2>📈 Lịch sử học tập</h2>
+        <div id="history-content">
+            <ul id="historyList" class="history-list"></ul>
+            <button class="btn btn-reset" onclick="clearHistory()">Xóa lịch sử</button>
+        </div>
     </div>
 </main>
 
 <script>
-    const langData = {
-        vi: {
-            h1: "ENGLISH PRACTICING", desc: "Học tập thông minh - Thi cử tự tin",
-            nav: ["Trang Chủ", "Flashcard", "Luyện Tập", "Bài Kiểm Tra"],
-            homeItems: [
-                { h: "1. Quy tắc phát âm đuôi -ED", c: "• /id/: Sau t, d (wanted, decided)<br>• /t/: Sau p, k, f, s, sh, ch (watched, stopped)<br>• /d/: Các trường hợp còn lại." },
-                { h: "2. Quy tắc phát âm đuôi -S/ES", c: "• /s/: Sau p, t, k, f, th.<br>• /iz/: Sau s, ss, ch, sh, x, z, ge, ce.<br>• /z/: Các trường hợp còn lại." },
-                { h: "3. Trọng âm từ 2 âm tiết", c: "• Danh từ & Tính từ: Thường nhấn âm 1 ('teacher, 'happy).<br>• Động từ: Thường nhấn âm 2 (be'gin, re'lax)." }
-            ],
-            words: [
-                { f: "Preserve (v)", b: "Bảo tồn, gìn giữ" },
-                { f: "Innovation (n)", b: "Sự đổi mới" },
-                { f: "Sustainable (adj)", b: "Bền vững" }
-            ],
-            warn: "⚠️ Bạn chưa hoàn thành các câu màu vàng!",
-            score: "Kết quả: {s}/{t} câu đúng.",
-            questions: [{ q: "Phát âm -ed nào khác?", o: ["worked", "watched", "cleaned", "stopped"], a: 2 }],
-            testQs: [
-                { q: "If I were you, I _____ that job.", o: ["will take", "would take", "take", "took"], a: 1 },
-                { q: "The man _____ lives next door is a doctor.", o: ["whom", "which", "whose", "who"], a: 3 }
-            ]
-        },
-        en: {
-            h1: "ENGLISH PRACTICING", desc: "Learn Smart - Test with Confidence",
-            nav: ["Home", "Flashcards", "Practice", "Mock Test"],
-            homeItems: [
-                { h: "1. Pronunciation of -ED", c: "• /id/: After t, d.<br>• /t/: After p, k, f, s, sh, ch.<br>• /d/: Other cases." },
-                { h: "2. Pronunciation of -S/ES", c: "• /s/: After p, t, k, f, th.<br>• /iz/: After s, ss, ch, sh, x, z, ge, ce.<br>• /z/: Other cases." },
-                { h: "3. Stress in 2-syllable words", c: "• Nouns & Adjs: Usually 1st syllable.<br>• Verbs: Usually 2nd syllable." }
-            ],
-            words: [
-                { f: "Preserve (v)", b: "To keep something safe" },
-                { f: "Innovation (n)", b: "A new method or idea" },
-                { f: "Sustainable (adj)", b: "Able to continue for a long time" }
-            ],
-            warn: "⚠️ Please complete the yellow questions!",
-            score: "Score: {s}/{t} correct answers.",
-            questions: [{ q: "Which -ed is different?", o: ["worked", "watched", "cleaned", "stopped"], a: 2 }],
-            testQs: [
-                { q: "If I were you, I _____ that job.", o: ["will take", "would take", "take", "took"], a: 1 },
-                { q: "The man _____ lives next door is a doctor.", o: ["whom", "which", "whose", "who"], a: 3 }
-            ]
-        }
+    const irregularVerbs = [
+        { v1: "be", v2: "was/were", v3: "been", m: "thì, là, ở", e: "I have been busy." },
+        { v1: "begin", v2: "began", v3: "begun", m: "bắt đầu", e: "The class began at 8." },
+        { v1: "break", v2: "broke", v3: "broken", m: "làm vỡ", e: "He broke the window." },
+        { v1: "buy", v2: "bought", v3: "bought", m: "mua", e: "I bought a new book." },
+        { v1: "do", v2: "did", v3: "done", m: "làm", e: "I did my homework." },
+        { v1: "go", v2: "went", v3: "gone", m: "đi", e: "She has gone out." },
+        { v1: "know", v2: "knew", v3: "known", m: "biết", e: "I knew the answer." }
+        // Bạn có thể thêm tiếp cho đủ 360 từ vào đây
+    ];
+
+    const questionBank = [
+        { q: "She _____ to the gym every day.", o: ["go", "goes", "going", "gone"], a: 1 },
+        { q: "If it _____ sunny, we will go out.", o: ["is", "was", "were", "be"], a: 0 },
+        { q: "The cake _____ by my mom yesterday.", o: ["is made", "was made", "made", "was make"], a: 1 },
+        { q: "I have _____ this movie before.", o: ["see", "saw", "seen", "seeing"], a: 2 },
+        { q: "They _____ football when I came.", o: ["play", "played", "were playing", "are playing"], a: 2 },
+        { q: "He is the man _____ saved the boy.", o: ["who", "whom", "which", "whose"], a: 0 },
+        { q: "Choose the different stress:", o: ["'happy", "'teacher", "be'gin", "'student"], a: 2 },
+        { q: "Suffix -ed in 'stopped' is:", o: ["/id/", "/t/", "/d/", "/s/"], a: 1 }
+    ];
+
+    let qQuiz = [], qTest = [];
+
+    window.onload = () => {
+        loadVerbs();
+        initQuiz();
+        initTest();
+        showHistory();
     };
 
-    let currentLang = 'vi';
-    let cardIdx = 0;
-
-    async function init() {
-        try {
-            const res = await fetch('https://ipapi.co/json/');
-            const data = await res.json();
-            if (['US', 'GB', 'AU', 'CA'].includes(data.country_code)) {
-                if(confirm("Do you want to switch to English?")) currentLang = 'en';
-            }
-        } catch(e) {}
-        render();
+    function loadVerbs() {
+        document.getElementById('verbBody').innerHTML = irregularVerbs.map(v => 
+            `<tr><td><b>${v.v1}</b></td><td>${v.v2}</td><td>${v.v3}</td><td>${v.m}</td><td style="font-style:italic">${v.e}</td></tr>`
+        ).join('');
     }
 
-    function render() {
-        const d = langData[currentLang];
-        document.getElementById('site-title').innerText = d.h1;
-        document.getElementById('main-h1').innerText = d.h1;
-        document.getElementById('main-desc').innerText = d.desc;
-        document.querySelectorAll('.nav-btn').forEach((b, i) => b.innerText = d.nav[i]);
-        
-        document.getElementById('knowledge-container').innerHTML = d.homeItems.map(i => `
-            <div class="knowledge-item">
-                <div class="knowledge-header" onclick="this.nextElementSibling.classList.toggle('show')">${i.h} <span>▼</span></div>
-                <div class="knowledge-content">${i.c}</div>
-            </div>`).join('');
-
-        updateCard();
-        renderQs('quiz-area', d.questions, 'q');
-        renderQs('test-area', d.testQs, 't');
+    function searchVerbs() {
+        let input = document.getElementById("verbSearch").value.toLowerCase();
+        let rows = document.getElementById("verbBody").getElementsByTagName("tr");
+        for (let row of rows) row.style.display = row.textContent.toLowerCase().includes(input) ? "" : "none";
     }
 
-    function updateCard() {
-        const word = langData[currentLang].words[cardIdx];
-        document.getElementById('fc-front').innerText = word.f;
-        document.getElementById('fc-back').innerText = word.b;
-    }
-
-    function nextCard() {
-        cardIdx = (cardIdx + 1) % langData[currentLang].words.length;
-        document.querySelector('.flashcard-inner').classList.remove('flipped');
-        setTimeout(updateCard, 200);
-    }
+    function initQuiz() { qQuiz = getRandom(5); renderQs('quiz-area', qQuiz, 'q'); document.getElementById('quiz-result').style.display='none'; }
+    function initTest() { qTest = getRandom(8); renderQs('test-area', qTest, 't'); document.getElementById('test-result').style.display='none'; }
+    function getRandom(n) { return [...questionBank].sort(() => 0.5 - Math.random()).slice(0, n); }
 
     function renderQs(id, data, pre) {
         document.getElementById(id).innerHTML = data.map((item, i) => `
@@ -197,13 +150,12 @@
                 <div class="options-list">
                     ${item.o.map((opt, idx) => `<label><input type="radio" name="${pre}-${i}" value="${idx}"> ${opt}</label>`).join('')}
                 </div>
-                <div id="${pre}-f-${i}" style="margin-top:10px; font-weight:bold"></div>
+                <div id="${pre}-f-${i}" style="font-weight:bold; margin-top:5px"></div>
             </div>`).join('');
     }
 
     function grade(type) {
-        const d = langData[currentLang];
-        const data = type === 'quiz' ? d.questions : d.testQs;
+        const data = type === 'quiz' ? qQuiz : qTest;
         const pre = type === 'quiz' ? 'q' : 't';
         let score = 0, complete = true;
 
@@ -212,18 +164,55 @@
             const block = document.getElementById(`${pre}-b-${i}`);
             const fb = document.getElementById(`${pre}-f-${i}`);
             block.classList.remove('unanswered');
-
-            if (!sel) { block.classList.add('unanswered'); complete = false; }
+            if(!sel) { block.classList.add('unanswered'); complete = false; }
             else {
-                if (parseInt(sel.value) === item.a) { fb.innerHTML = "✅ Correct!"; fb.style.color = "green"; score++; }
-                else { fb.innerHTML = `❌ Wrong! (${item.o[item.a]})`; fb.style.color = "red"; }
+                if(parseInt(sel.value) === item.a) { score++; fb.innerHTML="✅"; fb.style.color="green"; }
+                else { fb.innerHTML=`❌ (Đúng: ${item.o[item.a]})`; fb.style.color="red"; }
             }
         });
 
         const res = document.getElementById(`${type}-result`);
         res.style.display = "block";
-        res.innerText = complete ? d.score.replace('{s}', score).replace('{t}', data.length) : d.warn;
-        res.style.background = complete ? "#ecfdf5" : "#fffbeb";
+        if(complete) {
+            res.innerHTML = `Điểm của bạn: ${score}/${data.length}`;
+            res.style.background = "#ecfdf5";
+            saveToHistory(type, score, data.length);
+        } else {
+            res.innerHTML = "⚠️ Hãy hoàn thành các câu màu vàng!";
+            res.style.background = "#fffbeb";
+        }
+    }
+
+    // LƯU LỊCH SỬ
+    function saveToHistory(type, s, t) {
+        let history = JSON.parse(localStorage.getItem('eng_history')) || [];
+        const record = {
+            type: type.toUpperCase(),
+            score: `${s}/${t}`,
+            time: new Date().toLocaleString('vi-VN')
+        };
+        history.unshift(record);
+        localStorage.setItem('eng_history', JSON.stringify(history.slice(0, 10))); // Lưu 10 bản ghi gần nhất
+        showHistory();
+    }
+
+    function showHistory() {
+        let history = JSON.parse(localStorage.getItem('eng_history')) || [];
+        const list = document.getElementById('historyList');
+        if(history.length === 0) { list.innerHTML = "Chưa có dữ liệu."; return; }
+        list.innerHTML = history.map(h => `
+            <li class="history-item">
+                <span><b>${h.type}</b>: ${h.score}</span>
+                <span style="color:#999; font-size:0.8em">${h.time}</span>
+            </li>
+        `).join('');
+    }
+
+    function clearHistory() {
+        if(confirm("Xóa toàn bộ lịch sử?")) {
+            localStorage.removeItem('eng_history');
+            showHistory();
+        }
     }
 
     function showTab(id) {
@@ -232,8 +221,6 @@
         document.getElementById(id).classList.add('active');
         event.currentTarget.classList.add('active');
     }
-
-    window.onload = init;
 </script>
 </body>
 </html>
